@@ -25,7 +25,7 @@ public class Game
             Console.Clear();
             DisplayWord();
             Console.Write("Gissa en bokstav: ");
-            char guess = char.ToUpper(Console.ReadKey().KeyChar); 
+            char guess = char.ToUpper(Console.ReadKey().KeyChar);
             Console.WriteLine();
 
             /* Anropar metod med guess som argument */
@@ -41,8 +41,37 @@ public class Game
         }
         else
         {
+            Console.Clear();
             /* Förlustmeddelande */
             Console.WriteLine("Tyvärr, du förlorade. Ordet var: " + wordToGuess);
+        }
+    }
+
+    /* Fråga om användaren vill spela igen */
+    public bool AskToPlayAgain()
+    {
+        /* Loop för få "ja" eller "nej" av användaren. */
+        while (true)
+        {
+            Console.Write("Vill du spela igen? (ja/nej): ");
+            string response = Console.ReadLine().Trim().ToLower();
+
+            /* Returnerar true till Program.cs */
+            if (response == "ja")
+            {
+                return true;
+            }
+            /* Returnerar false till Program.cs */
+            else if (response == "nej")
+            {
+                return false;
+            }
+            /* Ifall användaren skriver inte skriver "ja" eller "nej", be dem försöka igen */
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Ogiltigt svar. Svara med 'ja' eller 'nej'.");
+            }
         }
     }
 
@@ -83,13 +112,13 @@ public class Game
                 remainingAttempts--;
                 Console.WriteLine("Fel gissning!");
             }
-            else 
+            else
             {
                 /* Meddelar spelaren att det är en bra gissning */
-                Console.WriteLine("Bra gissning!"); 
+                Console.WriteLine("Bra gissning!");
             }
         }
-        else 
+        else
         {
             /* Meddelar ifall bokstaven redan har blivit gissad */
             Console.WriteLine("Du har redan gissat på den bokstaven!");
