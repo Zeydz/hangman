@@ -37,12 +37,14 @@ public class Game
             Console.Clear();
             DrawHangman();
             Console.WriteLine("Grattis! Du gissade ordet: " + wordToGuess);
+            Console.WriteLine($"Du hade {remainingAttempts} försök kvar!");
         }
         else
         {
             Console.Clear();
             DrawHangman();
             Console.WriteLine("Tyvärr, du förlorade. Ordet var: " + wordToGuess);
+            Console.WriteLine("Du har inga försök kvar.");
         }
     }
     /* Fråga om användaren vill spela igen */
