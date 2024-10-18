@@ -2,15 +2,15 @@ public class Game
 {
     /* Definierar variabler. */
     private string wordToGuess;
-    private List<char> guessedLetter;
+    private List<char> guessedLetters;
     private int remainingAttempts;
 
     /* Konstruktor som initierar spelet med ett ord */
     public Game(string word)
     {
         wordToGuess = word;
-        guessedLetter = new List<char>();
-        remainingAttempts = 12;
+        guessedLetters = new List<char>();
+        remainingAttempts = 7;
     }
 
     /* Metod för att starta spelet */
@@ -18,35 +18,33 @@ public class Game
     {
         Console.WriteLine("Välkommen till Hänga Gubbe!");
 
-        /* Loop för att hålla spelet igång tills användaren vinner/förlorar */
+        /* Loop för att hålla konsolen igång */
         while (!IsGameOver())
         {
-            /* Kör displayWord för att visa antal bokstäver */
+            /* Startar spelet och visar hänga gubben samt ordet. Skickar bokstav som argument till MakeGuess*/
             Console.Clear();
+            DrawHangman();
             DisplayWord();
             Console.Write("Gissa en bokstav: ");
             char guess = char.ToUpper(Console.ReadKey().KeyChar);
             Console.WriteLine();
 
-            /* Anropar metod med guess som argument */
             MakeGuess(guess);
         }
 
-        /* Kontroll för att meddela om användaren gissat rätt eller fel bokstav */
         if (IsWordGuessed())
         {
-            /* Vinstmeddelande */
             Console.Clear();
+            DrawHangman();
             Console.WriteLine("Grattis! Du gissade ordet: " + wordToGuess);
         }
         else
         {
             Console.Clear();
-            /* Förlustmeddelande */
+            DrawHangman();
             Console.WriteLine("Tyvärr, du förlorade. Ordet var: " + wordToGuess);
         }
     }
-
     /* Fråga om användaren vill spela igen */
     public bool AskToPlayAgain()
     {
@@ -75,6 +73,71 @@ public class Game
         }
     }
 
+    /* Visuell hänga gubbe */
+    private void DrawHangman()
+    {
+        /* Switch för att visa rätt hänga gubbe beroende på hur många försök användaren har kvar.*/
+        switch (remainingAttempts)
+        {
+            case 7:
+                Console.WriteLine("  +---+");
+                Console.WriteLine("      |");
+                Console.WriteLine("      |");
+                Console.WriteLine("      |");
+                Console.WriteLine("     ===");
+                break;
+            case 6:
+                Console.WriteLine("  +---+");
+                Console.WriteLine("  O   |");
+                Console.WriteLine("      |");
+                Console.WriteLine("      |");
+                Console.WriteLine("     ===");
+                break;
+            case 5:
+                Console.WriteLine("  +---+");
+                Console.WriteLine("  O   |");
+                Console.WriteLine("  |   |");
+                Console.WriteLine("      |");
+                Console.WriteLine("     ===");
+                break;
+            case 4:
+                Console.WriteLine("  +---+");
+                Console.WriteLine("  O   |");
+                Console.WriteLine(" /|   |");
+                Console.WriteLine("      |");
+                Console.WriteLine("     ===");
+                break;
+            case 3:
+                Console.WriteLine("  +---+");
+                Console.WriteLine("  O   |");
+                Console.WriteLine(" /|\\  |");
+                Console.WriteLine("      |");
+                Console.WriteLine("     ===");
+                break;
+            case 2:
+                Console.WriteLine("  +---+");
+                Console.WriteLine("  O   |");
+                Console.WriteLine(" /|\\  |");
+                Console.WriteLine(" /    |");
+                Console.WriteLine("     ===");
+                break;
+            case 1:
+                Console.WriteLine("  +---+");
+                Console.WriteLine("  O   |");
+                Console.WriteLine(" /|\\  |");
+                Console.WriteLine(" / \\  |");
+                Console.WriteLine("     ===");
+                break;
+            default:
+                Console.WriteLine("  +---+");
+                Console.WriteLine("  X   |");
+                Console.WriteLine(" /|\\  |");
+                Console.WriteLine(" / \\  |");
+                Console.WriteLine("     ===");
+                break;
+        }
+    }
+
     /* Metod för att visa ordet med gissade bokstäver */
     private void DisplayWord()
     {
@@ -82,7 +145,7 @@ public class Game
         string displayWord = "";
         foreach (char letter in wordToGuess)
         {
-            if (guessedLetter.Contains(letter))
+            if (guessedLetters.Contains(letter))
             {
                 displayWord += letter + " ";
             }
@@ -93,18 +156,18 @@ public class Game
         }
         /* Visar gissade bokstäver samt visar kvarvarande försök */
         Console.WriteLine("Ord: " + displayWord);
-        Console.WriteLine("Gissade bokstäver: " + string.Join(",", guessedLetter));
-        Console.WriteLine("Kvarvarande försök: " + remainingAttempts);
+        Console.WriteLine("Gissade bokstäver: " + string.Join(",", guessedLetters));
+        Console.WriteLine($"Du har {remainingAttempts} försök kvar innan gubben är hängd!");
     }
 
     /* Metod för att hantera en gissning av en bokstav.  */
     public void MakeGuess(char letter)
     {
         /* Kontrollera ifall bokstaven inte har blivit gissad innan */
-        if (!guessedLetter.Contains(letter))
+        if (!guessedLetters.Contains(letter))
         {
             /* Lägg till bokstav i lista */
-            guessedLetter.Add(letter);
+            guessedLetters.Add(letter);
 
             /* Om bokstaven inte finns i ordet så minskar antalet kvarvarande försök */
             if (!wordToGuess.Contains(letter))
@@ -137,7 +200,7 @@ public class Game
     {
         foreach (char letter in wordToGuess)
         {
-            if (!guessedLetter.Contains(letter))
+            if (!guessedLetters.Contains(letter))
             {
                 return false;
             }
