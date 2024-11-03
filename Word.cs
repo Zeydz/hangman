@@ -3,7 +3,7 @@ public class Word
     /* Lagrar ordet */
     private string[] words;
 
-    /*Konstruktor som laddar in ord från fil  */
+    /*Konstruktor som laddar in ord från fil. Public för att komma åt den*/
     public Word()
     {
         LoadWords();
@@ -12,7 +12,7 @@ public class Word
     /* Metod för att ladda ord från textfil */
     private void LoadWords()
     {
-        /* Try / catch för att hantera felmeddela */
+        /* Try / catch för att hantera felmeddelande */
         try
         {
             /* Läser raderna i textfilen, gör om alla ord till stora bokstäver */
