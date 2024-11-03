@@ -22,12 +22,19 @@ public class Word
         catch (Exception error)
         {
             Console.WriteLine("Fel vid inladdning av ordfilen: " + error.Message);
+            words = null;
         }
     }
 
     /* Randomisering av ord */
     public string GetRandomWord()
     {
+        if (words == null || words.Length == 0)
+        {
+            Console.WriteLine("Kunde inte ladda ordlistan, kontrollera att filen existerar och innehåller data. Avslutar programmet.");
+            Environment.Exit(1);
+        }
+        
         Random random = new Random();
         return words[random.Next(words.Length)];
     }
