@@ -13,8 +13,6 @@ class Program
             string randomWord = word.GetRandomWord();
 
             Console.Clear();
-            Console.WriteLine("Slumpmässigt ord: " + randomWord);
-
             /* Skapar en instans av Game-klassen. Skickar in det slumpmässiga ordet. */
             Game game = new Game(randomWord);
             game.Start();
